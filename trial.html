@@ -46,13 +46,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>    </td>
-                                <td>    </td>
-                                <td>    </td>
-                                <td>   </td>
-                            </tr>
                         </tbody>
+                        <tr>
+<!--                            Còn đây là cách để ở html-->
+                            <td> INPUT </td>
+                            <td id="revenue">  10,000,000  </td> <!--Gán cho mỗi cell một cái id, xong suống dưới script lấy giá trị nó lên-->
+                            <td id="cost">  2,000,000  </td>
+                            <td id="benefit">  300,000,000 </td>
+                        </tr>
 
                     </table>
 
@@ -70,10 +71,7 @@
         </div>
     </div>
 
-    <script src="node_modules/dist/jquery-3.5.1.min.js">
-    </script>
-
-
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -98,19 +96,19 @@
                     // lmu01chart.push(parseInt(entry[i].gs$cell.numericValue))
                 }
 
-                var lmu02 = [];
-                var lmu02chart = []
-                lmu02.push(entry[356].gs$cell.inputValue)
+                var lmu02 = ['INPUT',123123,22222,344444]; // Anh có thể sửa trực tiếp ở đây để show lên table
+                var lmu02chart = [123123,22222,30000000]// Và sửa ở đây y như vậy để show lên chart
+                // lmu02.push(entry[356].gs$cell.inputValue)
 
-                for (i = 357; i <= 359; i++) {
-                    lmu02.push(parseInt(entry[i].gs$cell.$t))
-                    lmu02chart.push(parseInt(entry[i].gs$cell.numericValue  ))
-                    
-                }
-console.log(lmu01, lmu02,lmu01chart,lmu02chart)
+                // for (i = 357; i <= 359; i++) {
+                //     lmu02.push(parseInt(entry[i].gs$cell.$t))
+                //     lmu02chart.push(parseInt(entry[i].gs$cell.numericValue  ))
+                //
+                // }
+                console.log(lmu01, lmu02,lmu01chart,lmu02chart)
 
                 var datatable = [
-                    lmu01, lmu02
+                    lmu01
                 ]
                 console.log(datatable)
                 $('#example').DataTable({
@@ -122,6 +120,26 @@ console.log(lmu01, lmu02,lmu01chart,lmu02chart)
                 // console.log(lmu01chart,lmu02chart)
                 // console.log(lmu01)
 
+                // Đây là nơi lấy giá trị cell theo id ở trên kia
+                var revenue = document.getElementById('revenue').innerText;
+                console.log('revenue:',revenue);
+                //Lúc này revenue có giá trị  10,000,000 => Anh phải thực hiện 2 bước
+                // 1. Cắt bỏ mấy cái dấu phẩy , => xong sẽ có revenue = 10000000
+                revenue = revenue.split(',').join('');
+                // 2. Convert revenue sang integer(kiểu số), vì chart này nó chỉ hiểu số thôi
+                revenue = parseInt(revenue);
+                var cost = document.getElementById('cost').innerText;
+                cost = cost.split(',').join('');
+                cost = parseInt(cost);
+
+                var benefit = document.getElementById('cost').innerText;
+                benefit = benefit.split(',').join('');
+                benefit = parseInt(benefit);
+
+                // Xong anh gán cho nó vào 1 array để show lên chart
+                var lm03chart = [revenue, cost, benefit];
+                console.log('Mảng cần để show lên chart: ',lm03chart);
+                // rồi anh đem cái lm03 này để ở dưới chart là show lên đc.
 
                 Highcharts.chart('container', {
                     chart: {
@@ -167,12 +185,12 @@ console.log(lmu01, lmu02,lmu01chart,lmu02chart)
                         }
                     },
                     series: [{
-                        name: 'lmu01',
+                        name: 'lmu01',// cái tên ở đây anh muốn đặt gì đặt nhe, ko ảnh hưởng
                         data: lmu01chart
 
                     }, {
-                        name: 'lmu02',
-                        data: lmu02chart
+                        name: 'lmu02', // cái tên ở đây anh muốn đặt gì đặt nhe, ko ảnh hưởng
+                        data: lm03chart // Đây là nơi cần gán cái mảng ở trên ah
 
                     }]
                 });
