@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
         table,
         th,
@@ -29,126 +29,118 @@
 </head>
 
 <body>
-<div id="app">
-    <div class="container">
-        <h3>STATUS</h3>
-        <div class="row">
-            <div class="col-md-6">
-                <form>
-                    <div class="form-group">
-                        <label for="Revenue">Revenue: </label>
-                        <input type="text" name="revenue" class="form-control" id="revenue" aria-describedby="emailHelp"
-                               placeholder="Enter revenue">
-                    </div>
-                    <div class="form-group">
-                        <label for="cost">Cost: </label>
-                        <input type="text" name="cost" class="form-control" id="cost" placeholder="Cost">
-                    </div>
-                    <div class="form-group">
-                        <label for="Benefit">Benefit: </label>
-                        <input type="text" name="benefit" class="form-control" id="benefit" placeholder="Benefit">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-warning clear">Clear </button>
-                </form>
-            </div>
-            <div class="col-md-6">bang bieu
-                <table id="example" class="display" style="width:100%">
-                    <thead>
-                    <tr>
-                        <th>STATUS</th>
-                        <th>REVENUE</th>
-                        <th>COST</th>
-                        <th>BENEFIT</th>
-                        <!-- <th>AltLUT AREA</th>
-                        <th>LAND SUITABILITY </th> -->
-                        <!-- <th>AREA</th> -->
-                    </tr>
-                    </thead>
-                    <tbody>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">bang bieu
+                    <table id="example" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>STATUS </th>
+                                <th>REVENUE </th>
+                                <th>COST </th>
+                                <th>BENEFIT</th>
+                                <!-- <th>AltLUT AREA</th>
+                                <th>LAND SUITABILITY </th> -->
+                                <!-- <th>AREA</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tr>
+<!--                            Còn đây là cách để ở html-->
+                            <td> INPUT </td>
+                            <td id="revenue">  10,000,000  </td> <!--Gán cho mỗi cell một cái id, xong suống dưới script lấy giá trị nó lên-->
+                            <td id="cost">  2,000,000  </td>
+                            <td id="benefit">  300,000,000 </td>
+                        </tr>
 
-                </table>
+                    </table>
 
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <figure class="highcharts-figure">
-                    <div id="container"></div>
-                    <p class="highcharts-description">
-                        A basic column chart compares rainfall values between four cities.
-                        Tokyo has the overall highest amount of rainfall, followed by New York.
-                    </p>
-                </figure>
+                </div>
+                <div class="col-md-6">
+                    <figure class="highcharts-figure">
+                        <div id="container"></div>
+                        <p class="highcharts-description">
+                            A basic column chart compares rainfall values between four cities.
+                            Tokyo has the overall highest amount of rainfall, followed by New York.
+                        </p>
+                    </figure>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8"
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-<script>
-    $(document).ready(function () {
+    <script>
+        $(document).ready(function () {
 
-        var url = "https://spreadsheets.google.com/feeds/cells/1h2b3LzI4rpXSaZFhoCtEq6sbFBQVBF8f43CL4g_Itb0/1/public/full?alt=json"
-        $.getJSON(url, function (data) {
-            console.log(data)
-            var entry = data.feed.entry
-            var lmu01 = [];
-            var lmu01chart = []
-            lmu01.push(entry[352].gs$cell.inputValue)
-            for (i = 353; i <= 355; i++) {
-                lmu01.push(entry[i].gs$cell.$t)
-                // lmu01chart.push(entry[i].gs$cell.$t)
-                lmu01chart.push(parseFloat(entry[i].gs$cell.numericValue))
-                // lmu01chart.push(parseInt(entry[i].gs$cell.numericValue))
-            }
+            var url = "https://spreadsheets.google.com/feeds/cells/1h2b3LzI4rpXSaZFhoCtEq6sbFBQVBF8f43CL4g_Itb0/1/public/full?alt=json"
+            $.getJSON(url, function (data) {
+                console.log(data)
+                var entry = data.feed.entry
+                var lmu01 = [];
+                var lmu01chart = []
+                lmu01.push(entry[352].gs$cell.inputValue)
+                for (i = 353; i <= 355; i++) {
+                    lmu01.push(entry[i].gs$cell.$t)
+                    // lmu01chart.push(entry[i].gs$cell.$t)
+                    lmu01chart.push(parseFloat(entry[i].gs$cell.numericValue))
+                    // lmu01chart.push(parseInt(entry[i].gs$cell.numericValue))
+                }
 
-            var lmu02 = ['INPUT', 0, 0, 0]; // Anh có thể sửa trực tiếp ở đây để show lên table
-            var lmu02chart = [0, 0, 0]// Và sửa ở đây y như vậy để show lên chart
+                var lmu02 = ['INPUT',123123,22222,344444]; // Anh có thể sửa trực tiếp ở đây để show lên table
+                var lmu02chart = [123123,22222,30000000]// Và sửa ở đây y như vậy để show lên chart
+                // lmu02.push(entry[356].gs$cell.inputValue)
 
-            console.log(lmu01, lmu02, lmu01chart, lmu02chart)
+                // for (i = 357; i <= 359; i++) {
+                //     lmu02.push(parseInt(entry[i].gs$cell.$t))
+                //     lmu02chart.push(parseInt(entry[i].gs$cell.numericValue  ))
+                //
+                // }
+                console.log(lmu01, lmu02,lmu01chart,lmu02chart)
 
-            var datatable = [
-                lmu01, lmu02
-            ]
-            console.log(datatable);
-            var table = $('#example').DataTable({
-                data: datatable
-            }); // Khởi tạo bảng
-            drawChart(lmu01chart, lmu02chart); // Khởi tạo chart
-
-            $( "form" ).submit(function( event ) {
-                event.preventDefault();
-                console.log( $( this ).serializeArray() );
-                let lmuInput = ['INPUT'];
-                let lmuInputChart = [];
-                let inputValues = $( this ).serializeArray();
-                inputValues.forEach(function (element, index) {
-                    lmuInput.push(parseInt(element.value));
-                    lmuInputChart.push(parseInt(element.value));
-                })
-                console.log(lmuInput);
-                table.destroy();
-                table = $('#example').DataTable({
-                    data: [lmu01, lmuInput]
+                var datatable = [
+                    lmu01
+                ]
+                console.log(datatable)
+                $('#example').DataTable({
+                    data: datatable
                 });
+                // var lmu01chart = lmu01.shift()
 
-                drawChart(lmu01chart, lmuInputChart); // Khởi tạo chart
-            });
-            $(".clear").click(function () {
-                $("#revenue").val("");
-                $("#cost").val("");
-                $("#benefit").val("");
-            })
+                // var lmu02chart = lmu02.shift()
+                // console.log(lmu01chart,lmu02chart)
+                // console.log(lmu01)
 
-            function drawChart(lmu01Chart, lmu02Chart){
+                // Đây là nơi lấy giá trị cell theo id ở trên kia
+                var revenue = document.getElementById('revenue').innerText;
+                console.log('revenue:',revenue);
+                //Lúc này revenue có giá trị  10,000,000 => Anh phải thực hiện 2 bước
+                // 1. Cắt bỏ mấy cái dấu phẩy , => xong sẽ có revenue = 10000000
+                revenue = revenue.split(',').join('');
+                // 2. Convert revenue sang integer(kiểu số), vì chart này nó chỉ hiểu số thôi
+                revenue = parseInt(revenue);
+                var cost = document.getElementById('cost').innerText;
+                cost = cost.split(',').join('');
+                cost = parseInt(cost);
+
+                var benefit = document.getElementById('cost').innerText;
+                benefit = benefit.split(',').join('');
+                benefit = parseInt(benefit);
+
+                // Xong anh gán cho nó vào 1 array để show lên chart
+                var lm03chart = [revenue, cost, benefit];
+                console.log('Mảng cần để show lên chart: ',lm03chart);
+                // rồi anh đem cái lm03 này để ở dưới chart là show lên đc.
+
                 Highcharts.chart('container', {
                     chart: {
                         type: 'column'
@@ -173,7 +165,7 @@
                     },
                     yAxis: {
                         min: 0,
-
+                        
                         title: {
                             text: 'Rainfall (mm)'
                         }
@@ -193,23 +185,21 @@
                         }
                     },
                     series: [{
-                        name: 'lmu01',
-                        data: lmu01Chart
+                        name: 'lmu01',// cái tên ở đây anh muốn đặt gì đặt nhe, ko ảnh hưởng
+                        data: lmu01chart
 
                     }, {
-                        name: 'lmu02',
-                        data: lmu02Chart
+                        name: 'lmu02', // cái tên ở đây anh muốn đặt gì đặt nhe, ko ảnh hưởng
+                        data: lm03chart // Đây là nơi cần gán cái mảng ở trên ah
 
                     }]
                 });
-            }
 
+            })
 
-        })
+        });
 
-    });
-
-</script>
+    </script>
 
 
 </body>
